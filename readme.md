@@ -1,5 +1,5 @@
 MAX7219 Font Generator for Arduino/ ESP boards (.h output)
--------------------------------------------------------------
+---
 
 Uses Python/ Pillow to render .otf fonts and output C++ headers
 
@@ -15,3 +15,6 @@ The font.h files contain two arrays for the font:
     
     To find the width of character 'c':
         int width = font_name_offsets[c - start_char + 1] - font_name_offsets[c - start_char];
+
+here is a preview of the 8 bit font shown:
+![preview](./arduino_example/example.jpg)
