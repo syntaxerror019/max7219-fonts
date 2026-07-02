@@ -3,7 +3,7 @@ import string
 from font import Font, Glyph
 
 def render_character(ch, image_font, pixel_height=8):
-    # Large temporary canvas
+    #Large temporary canvas
     img = Image.new("1", (64, 64), 0)
     draw = ImageDraw.Draw(img)
 
@@ -16,7 +16,6 @@ def render_character(ch, image_font, pixel_height=8):
 
     glyph = img.crop(bbox)
 
-    # Scale height to exactly 8 pixels
     w, h = glyph.size
 
     if h != pixel_height:

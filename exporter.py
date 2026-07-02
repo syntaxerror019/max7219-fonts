@@ -6,7 +6,6 @@ def export_header(font: Font, output_path: str, font_name: str = None):
         # derive from path
         font_name = os.path.splitext(os.path.basename(output_path))[0]
         
-    # We need to sort glyphs by ASCII character to ensure continuous offset mapping
     sorted_chars = sorted(font.glyphs.keys())
     if not sorted_chars:
         print("Error: No glyphs to export.")
@@ -15,12 +14,11 @@ def export_header(font: Font, output_path: str, font_name: str = None):
     start_char = ord(sorted_chars[0])
     end_char = ord(sorted_chars[-1])
     
-    # Build data array and offset array
+    #data array and offset array
     data_bytes = []
     offsets = []
     current_offset = 0
     
-    # Fill in any missing characters in the range with empty glyphs (width 0)
     for code in range(start_char, end_char + 1):
         ch = chr(code)
         offsets.append(current_offset)
@@ -29,11 +27,10 @@ def export_header(font: Font, output_path: str, font_name: str = None):
             data_bytes.extend(glyph.columns)
             current_offset += glyph.width
             
-    # Add final offset so the width of the last character can be calculated
     offsets.append(current_offset)
     
-    # Format C arrays
-    # 12 columns per line for hex dump
+    #format C arrays
+    #twelve columns per line for teh hex dump
     def chunked_hex(bytes_list, chunk_size=12):
         lines = []
         for i in range(0, len(bytes_list), chunk_size):
@@ -48,7 +45,7 @@ def export_header(font: Font, output_path: str, font_name: str = None):
             lines.append("    " + ", ".join(f"{n}" for n in chunk) + ",")
         return "\n".join(lines)
 
-    header_content = f"""// Generated MAX7219 Font Header
+    header_content = f"""// Generated MAX7219 Font Header (www.mileshilliard.com)
 // Font Name: {font_name}
 // Character Range: ASCII {start_char} to {end_char}
 
